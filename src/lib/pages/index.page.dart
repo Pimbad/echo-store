@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 
+import '../router/router.dart';
+import '../utils/sizes.dart';
+
 class IndexPage extends StatefulWidget{
   const IndexPage({super.key});
 
@@ -22,10 +25,7 @@ class _IndexPageState extends State<IndexPage> {
   }
 
    void pushLoginPage(){
-      Timer(const Duration(seconds: 3), (){
-          Navigator.pushReplacement(context, 
-            MaterialPageRoute(builder: (BuildContext builder) => const LoginPage()));
-      });
+      Timer(const Duration(seconds: 3), () => CustomRouter.pushReplacement(const LoginPage(), context));
   } 
 
   @override 
@@ -33,20 +33,20 @@ class _IndexPageState extends State<IndexPage> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: Sizes.getFullWidth(context),
+        height: Sizes.getFullHeight(context),
         color: ColorPallete.backgroundColor,
         child: Column(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height/2,
-              child: Image(image: AssetImage('assets/images/logo.png'))
+            SizedBox(
+              width: Sizes.getFullWidth(context),
+              height: Sizes.getHalfHeight(context),
+              child: const Image(image: AssetImage('assets/images/logo.png'))
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height/2,
-              child: Image(image: AssetImage('assets/images/sub-logo.png')),
+            SizedBox(
+              width: Sizes.getFullWidth(context),
+              height: Sizes.getHalfHeight(context),
+              child: const Image(image: AssetImage('assets/images/sub-logo.png')),
             )
           ],
         )

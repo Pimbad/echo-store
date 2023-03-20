@@ -22,7 +22,7 @@ class _IndexPageState extends State<IndexPage> {
   }
 
    void pushLoginPage(){
-      Timer(const Duration(seconds: 2), (){
+      Timer(const Duration(seconds: 3), (){
           Navigator.pushReplacement(context, 
             MaterialPageRoute(builder: (BuildContext builder) => const LoginPage()));
       });
@@ -36,6 +36,20 @@ class _IndexPageState extends State<IndexPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: ColorPallete.backgroundColor,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height/2,
+              child: Image(image: AssetImage('assets/images/logo.png'))
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height/2,
+              child: Image(image: AssetImage('assets/images/sub-logo.png')),
+            )
+          ],
+        )
       ),
     );
   }

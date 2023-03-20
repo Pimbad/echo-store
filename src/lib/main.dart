@@ -1,3 +1,4 @@
+import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:echo_store/pages/index.page.dart';
 
@@ -14,7 +15,6 @@ class MainApp extends StatelessWidget {
       title: "EchoStore",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
       ),
       home: const IndexPage(),
     );

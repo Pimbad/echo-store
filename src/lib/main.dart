@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
       title: "EchoStore",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primarySwatch: ColorPallete.convertToMaterialColor(ColorPallete.backgroundColor) 
       ),
       home: const IndexPage(),
     );

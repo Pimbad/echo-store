@@ -12,4 +12,10 @@ class Sizes{
 
   static double getHalfHeight(BuildContext context)
     => MediaQuery.of(context).size.height / 2;
+
+  static double getPercentWidth(BuildContext context, int percent)
+    => MediaQuery.of(context).size.width * (percent / 100);
+
+  static double getPercentHeight(BuildContext context, int percent)
+    => MediaQuery.of(context).size.height * (percent / 100);
 }

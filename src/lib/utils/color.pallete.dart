@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ColorPallete{
-	static const Color backgroundColor = Color.fromRGBO(141, 27, 30, 1);
-  static const Color secondaryBackgroundColor = Color.fromRGBO(241, 241, 241, 1);
-	static const Color buttonColor = Color.fromRGBO(73, 73, 73, 1);
-	static const Color fontColor = Color.fromRGBO(109, 109, 109, 1);
+class ColorPallete {
+  static const Color backgroundColor = Color.fromRGBO(141, 27, 30, 1);
+  static const Color backgroundColorLight = Color.fromRGBO(196, 81, 85, 1);
+  static const Color secondaryBackgroundColor =
+      Color.fromRGBO(241, 241, 241, 1);
+  static const Color buttonColor = Color.fromRGBO(73, 73, 73, 1);
+  static const Color fontColor = Color.fromRGBO(109, 109, 109, 1);
 
-  static MaterialColor convertToMaterialColor(Color color){
+  static MaterialColor convertToMaterialColor(Color color) {
     final int red = color.red;
     final int green = color.green;
     final int blue = color.blue;

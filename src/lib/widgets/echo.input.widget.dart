@@ -1,7 +1,7 @@
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
 
-class CustomInput extends StatelessWidget {
+class EchoInput extends StatelessWidget {
   final String hintText;
   final IconData? icon;
   final Color inputColor;
@@ -12,7 +12,7 @@ class CustomInput extends StatelessWidget {
   final double fontSize;
   final TextInputType keyboardType;
 
-  const CustomInput(
+  const EchoInput(
       {this.hintText = "",
       this.icon,
       this.inputColor = ColorPallete.backgroundColor,

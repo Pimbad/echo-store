@@ -1,27 +1,38 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/color.pallete.dart';
 import '../utils/sizes.dart';
 
-class CustomPage extends StatelessWidget {
-  final Widget children;
+class EchoPage extends StatelessWidget {
+  final Widget? children;
 
-  CustomPage(this.children);
+  const EchoPage(this.children, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent
+    ));
+
     return SingleChildScrollView(
-        child: Container(
+      child: Container(
       color: ColorPallete.backgroundColor,
       alignment: Alignment.center,
       child: Column(children: [
         SizedBox(
-          width: Sizes.getFullWidth(context),
-          height: Sizes.getPercentHeight(context, 20),
-          child: Image.asset(
-            'assets/images/logo.png',
-            scale: 1.2,
-          ),
+          height: Sizes.getPercentHeight(context, 22),
+          child: Center(
+            child: SizedBox(
+              height: Sizes.getPercentHeight(context, 16),
+              child: Image.asset(
+                'assets/images/logo.png',
+                fit: BoxFit.fill,
+                scale: 1,
+              ),
+            )
+          )
         ),
         SizedBox(
             width: Sizes.getFullWidth(context),

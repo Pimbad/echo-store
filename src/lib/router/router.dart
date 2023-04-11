@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class CustomRouter {
+class EchoRouter {
   static Route _createRoute(StatefulWidget page) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,

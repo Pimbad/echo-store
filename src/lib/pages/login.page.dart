@@ -1,10 +1,9 @@
-import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../utils/sizes.dart';
-import '../widgets/custom.input.widget.dart';
-import '../widgets/custom.page.widget.dart';
+import '../widgets/echo.input.widget.dart';
+import '../widgets/echo.page.widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,14 +22,14 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomPage(
+      body: EchoPage(
         Center(
         child: Container(
           alignment: Alignment.center,
           width: Sizes.getPercentWidth(context, 85),
           height: Sizes.getPercentHeight(context, 55),
           child: Column(children: const [
-            CustomInput(
+            EchoInput(
               icon: Icons.mail,
               borderSide: 2,
               fontSize: 16,
@@ -38,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               hintText: "Digite seu email"
             ),
 
-            CustomInput(
+            EchoInput(
               icon: Icons.lock,
               borderSide: 2,
               passwordField: true,

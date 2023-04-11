@@ -26,7 +26,7 @@ class _IndexPageState extends State<IndexPage> {
 
   void pushLoginPage() {
     Timer(const Duration(seconds: 3),
-        () => CustomRouter.pushReplacement(const LoginPage(), context));
+        () => EchoRouter.pushReplacement(const LoginPage(), context));
   }
 
   @override
@@ -37,21 +37,18 @@ class _IndexPageState extends State<IndexPage> {
           width: Sizes.getFullWidth(context),
           height: Sizes.getFullHeight(context),
           color: ColorPallete.backgroundColor,
-          child: Column(
-            children: [
-              SizedBox(
-                  width: Sizes.getFullWidth(context),
-                  height: Sizes.getHalfHeight(context),
-                  child:
-                      const Image(image: AssetImage('assets/images/logo.png'))),
-              SizedBox(
-                width: Sizes.getFullWidth(context),
-                height: Sizes.getHalfHeight(context),
-                child: const Image(
-                    image: AssetImage('assets/images/sub-logo.png')),
-              )
-            ],
-          )),
+          child: Center(
+            child: SizedBox(
+            width: Sizes.getPercentWidth(context, 70),
+            height: Sizes.getPercentHeight(context, 70),
+            child:
+            Image.asset(
+              'assets/images/logo.png',
+              scale: 1,
+            ),
+          ),
+        )
+      )
     );
   }
 }

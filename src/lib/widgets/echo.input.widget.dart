@@ -27,16 +27,14 @@ class EchoInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 30, bottom: 30),
+        padding: const EdgeInsets.only(top: 35, bottom: 25),
         child: TextField(
           keyboardType: keyboardType,
           obscureText: passwordField,
-          style: TextStyle(
-            color: textColor,
-            fontSize: fontSize 
-          ),
+          style: TextStyle(color: textColor, fontSize: fontSize),
           decoration: InputDecoration(
-            hintText: hintText,
+              contentPadding: const EdgeInsets.all(25),
+              hintText: hintText,
               prefixIcon: icon != null
                   ? Icon(
                       icon,
@@ -44,18 +42,14 @@ class EchoInput extends StatelessWidget {
                     )
                   : null,
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  width: borderSide,
-                  color: inputColor),
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(width: borderSide, color: inputColor),
               ),
-
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  width: borderSide,
-                  color: inputFocusedColor),
-              )
-            ),
-        )
-      );
+                borderRadius: BorderRadius.circular(20),
+                borderSide:
+                    BorderSide(width: borderSide, color: inputFocusedColor),
+              )),
+        ));
   }
 }

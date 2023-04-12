@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:echo_store/pages/login.page.dart';
+import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:echo_store/utils/color.pallete.dart';
 
 import '../router/router.dart';
 import '../utils/sizes.dart';

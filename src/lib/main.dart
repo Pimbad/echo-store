@@ -1,6 +1,6 @@
+import 'package:echo_store/pages/index.page.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
-import 'package:echo_store/pages/index.page.dart';
 
 void main() {
   runApp(const MainApp());

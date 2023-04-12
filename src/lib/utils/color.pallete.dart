@@ -4,7 +4,8 @@ class ColorPallete {
   static const Color backgroundColor = Color.fromRGBO(56, 34, 31, 1);
   static const Color backgroundColorLight = Color.fromRGBO(112, 63, 42, 1);
   static const Color secondaryBackgroundColor =
-      Color.fromRGBO(241, 241, 241, 1);
+      Color.fromRGBO(239, 239, 239, 1);
+  static const Color cardBackgroundColor = Color.fromRGBO(255, 255, 255, 1);
   static const Color buttonColor = Color.fromRGBO(112, 63, 42, 1);
   static const Color buttonFontColor = Color.fromRGBO(241, 241, 241, 1);
   static const Color fontColor = Color.fromRGBO(109, 109, 109, 1);

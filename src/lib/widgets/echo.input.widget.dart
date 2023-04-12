@@ -36,7 +36,7 @@ class EchoInput extends StatelessWidget {
           obscureText: passwordField,
           style: TextStyle(color: textColor, fontSize: fontSize),
           decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(25),
+              contentPadding: const EdgeInsets.all(20),
               hintText: hintText,
               prefixIcon: icon != null
                   ? Icon(

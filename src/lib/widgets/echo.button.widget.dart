@@ -8,6 +8,10 @@ class EchoButton extends StatelessWidget {
   final GestureTapCallback onPressed;
   final Color backgroundColor;
   final Color fontColor;
+  final double paddingTop;
+  final double paddingBottom;
+  final double paddingLeft;
+  final double paddingRight;
 
   const EchoButton(
       {this.text = "",
@@ -16,12 +20,20 @@ class EchoButton extends StatelessWidget {
       this.height = 50,
       this.backgroundColor = ColorPallete.buttonColor,
       this.fontColor = ColorPallete.buttonFontColor,
+      this.paddingTop = 10,
+      this.paddingBottom = 10,
+      this.paddingLeft = 10,
+      this.paddingRight = 10,
       super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.only(
+        top: paddingTop,
+        bottom: paddingBottom,
+        left: paddingLeft,
+        right: paddingRight),
       child: SizedBox(
         width: width,
         height: height,

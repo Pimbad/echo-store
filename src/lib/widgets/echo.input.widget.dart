@@ -2,6 +2,7 @@ import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
 
 class EchoInput extends StatelessWidget {
+  final TextEditingController controller;
   final String hintText;
   final IconData? icon;
   final Color inputColor;
@@ -13,7 +14,8 @@ class EchoInput extends StatelessWidget {
   final TextInputType keyboardType;
 
   const EchoInput(
-      {this.hintText = "",
+      {required this.controller,
+      this.hintText = "",
       this.icon,
       this.inputColor = ColorPallete.backgroundColor,
       this.textColor = ColorPallete.backgroundColor,
@@ -27,8 +29,9 @@ class EchoInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 35, bottom: 25),
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: TextField(
+          controller: controller,
           keyboardType: keyboardType,
           obscureText: passwordField,
           style: TextStyle(color: textColor, fontSize: fontSize),

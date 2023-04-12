@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,8 +6,10 @@ import '../utils/sizes.dart';
 
 class EchoPage extends StatelessWidget {
   final Widget? children;
+  final double percentHeightOverlay;
+  final double percentHeightBody;
 
-  const EchoPage(this.children, {super.key});
+  const EchoPage(this.children, {this.percentHeightOverlay = 20, this.percentHeightBody = 80, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class EchoPage extends StatelessWidget {
       alignment: Alignment.center,
       child: Column(children: [
         SizedBox(
-          height: Sizes.getPercentHeight(context, 22),
+          height: Sizes.getPercentHeight(context, percentHeightOverlay),
           child: Center(
             child: SizedBox(
               height: Sizes.getPercentHeight(context, 16),
@@ -36,7 +37,7 @@ class EchoPage extends StatelessWidget {
         ),
         SizedBox(
             width: Sizes.getFullWidth(context),
-            height: Sizes.getPercentHeight(context, 80),
+            height: Sizes.getPercentHeight(context, percentHeightBody),
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),

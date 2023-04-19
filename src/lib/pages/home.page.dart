@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      height: Sizes.getPercentHeight(context, 46),
+                      height: Sizes.getPercentHeight(context, 58),
                       decoration: BoxDecoration(
                         color: ColorPallete.cardBackgroundColor,
                         borderRadius: BorderRadius.circular(20),
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(top: 20),
                             child: SizedBox(
                               width: Sizes.getPercentWidth(context, 35),
-                              height: Sizes.getPercentHeight(context, 18),
+                              height: Sizes.getPercentHeight(context, 20),
                               child: FittedBox(
                                 fit: BoxFit.fill,
                                 child: ClipRRect(
@@ -134,11 +134,12 @@ class _HomePageState extends State<HomePage> {
                               )
                             ),
                           ),
-                          Padding(
+                          
+                           Padding(
                             padding: const EdgeInsets.only(top: 25),
                             child: SizedBox(
                               width: Sizes.getPercentWidth(context, 70),
-                              height: Sizes.getPercentHeight(context, 23),
+                              height: Sizes.getPercentHeight(context, 30),
                               child: Column(children: [
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),
@@ -164,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 25),
+                                  padding: const EdgeInsets.only(top: 30),
                                   child: EchoButton(
                                     text: "Ver",
                                     height: 40,
@@ -179,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 0),
+                                  padding: const EdgeInsets.only(top: 10),
                                   child: EchoButton(
                                     text: "Adicionar ao carrinho",
                                     paddingTop: 5,
@@ -192,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                                 )
                               ]),
                             )
-                          )
+                          ),
                         ],
                       )
                       )

@@ -1,3 +1,4 @@
+import 'package:echo_store/pages/home.page.dart';
 import 'package:echo_store/pages/index.page.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: ColorPallete.convertToMaterialColor(ColorPallete.backgroundColor) 
       ),
-      home: const IndexPage(),
+      home: const HomePage(),
     );
   }
 }

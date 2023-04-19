@@ -1,4 +1,5 @@
 import 'package:echo_store/pages/login.page.dart';
+import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
 import 'package:echo_store/utils/toasts.dart';
 import 'package:echo_store/widgets/echo.button.widget.dart';
@@ -51,14 +52,14 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      body: EchoPage(Center( //echo input
-      child:Container( //cada componente pode ou não ter um filho com exceção do column ou row que pode ter vários
+      body: EchoPage(Center(
+      child:Container(
         alignment: Alignment.center,
         width: Sizes.getPercentWidth(context, 85),
-        height: Sizes.getPercentHeight(context, 55),
+        height: Sizes.getPercentHeight(context, 60),
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.only(top:35),
+            padding: const EdgeInsets.only(top: 25),
             child: EchoInput(controller: nameInputController,
               icon: Icons.person,
               borderSide: 2,
@@ -99,14 +100,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 16,
-                          color: Colors.purple),
+                          color: ColorPallete.fontColor),
                         ),
                         onTap: () => pushLoginPage(),                      
                       )
                     )
                   )
                 ]
-              ) //parameters: context - percent
+              )
           ),
 
           Padding(

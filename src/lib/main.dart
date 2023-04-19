@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: ColorPallete.convertToMaterialColor(ColorPallete.backgroundColor) 
       ),
-      home: const HomePage(),
+      home: const IndexPage(),
     );
   }
 }

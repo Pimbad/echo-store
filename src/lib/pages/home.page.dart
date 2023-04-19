@@ -4,6 +4,7 @@ import 'package:echo_store/router/router.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
+import 'package:echo_store/utils/toasts.dart';
 import 'package:echo_store/widgets/echo.button.widget.dart';
 import 'package:echo_store/widgets/echo.input.widget.dart';
 import 'package:echo_store/widgets/echo.page.widget.dart';
@@ -32,9 +33,14 @@ class _HomePageState extends State<HomePage> {
   void loadProducts() async {
     var products = await _productService.getProductsAsync();
 
-    setState(() {
-      _products = products;
-    });
+    if(products.isEmpty){
+      Toasts.errorToast("Não foi possível encontrar os produtos, tente novamente mais tarde!");
+    }
+    else{
+      setState(() {
+        _products = products;
+      });
+    }
   }
 
   @override
@@ -94,7 +100,6 @@ class _HomePageState extends State<HomePage> {
                 )
               ),
 
-
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: _products.isEmpty
@@ -107,14 +112,14 @@ class _HomePageState extends State<HomePage> {
               )  
               : SizedBox(
                 width: Sizes.getPercentWidth(context, 85),
-                height: Sizes.getPercentHeight(context, 70),
+                height: Sizes.getPercentHeight(context, 65),
                 child: ListView.builder(
                 itemCount: _products.length,
                 itemBuilder: (BuildContext context, int index){
                   return Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      height: Sizes.getPercentHeight(context, 58),
+                      height: Sizes.getPercentHeight(context, 56),
                       decoration: BoxDecoration(
                         color: ColorPallete.cardBackgroundColor,
                         borderRadius: BorderRadius.circular(20),

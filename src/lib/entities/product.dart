@@ -3,7 +3,7 @@ import 'package:echo_store/entities/product.rate.dart';
 class Product{
   int id;
   String title;
-  double price;
+  num price;
   String description;
   String category;
   String imageUrl;
@@ -22,7 +22,7 @@ class Product{
       Product(
         json['id'] as int,
         json['title'] as String,
-        json['price'] as double,
+        json['price'] as num,
         json['description'] as String,
         json['category'] as String,
         json['image'] as String,

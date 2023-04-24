@@ -6,6 +6,9 @@ class UserRepository{
   void saveUserToken(String token) =>
     storage.setItem("token", token);
 
-  void getUserToken() =>
+  String? getUserToken() =>
     storage.getItem("token");
+
+  void removeToken() =>
+    storage.setItem("token", "");
 }

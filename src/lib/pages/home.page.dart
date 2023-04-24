@@ -1,6 +1,7 @@
 import 'package:echo_store/entities/product.dart';
 import 'package:echo_store/pages/login.page.dart';
 import 'package:echo_store/router/router.dart';
+import 'package:echo_store/services/auth.service.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
@@ -21,14 +22,16 @@ class _HomePageState extends State<HomePage> {
   final searchController = TextEditingController();
 
   final ProductService _productService = ProductService();
+  final AuthService _authService = AuthService();
 
   List<Product> _products = List.empty();
 
-  void pushLoginPage() =>
-    EchoRouter.pushReplacement(const LoginPage(), context);
-
   void pushCartPage() =>
     EchoRouter.pushReplacement(const LoginPage(), context);
+
+  void logout(){
+    EchoRouter.pushReplacement(const LoginPage(), context);
+  }
 
   void loadProducts() async {
     var products = await _productService.getProductsAsync();
@@ -68,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                         color: ColorPallete.backgroundColorLight,
                         size: 30),
                       alignment: Alignment.centerLeft,
-                      onPressed: () => pushLoginPage(),
+                      onPressed: () => logout(),
                     )
                   ),
                 ),

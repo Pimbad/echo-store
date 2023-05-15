@@ -50,7 +50,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: EchoPage(Center(
       child:Container(
@@ -70,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.only(top: 35, bottom: 10),
             child: EchoInput(controller: emailInputController,
-              icon: Icons.mail,
+              icon: Icons.mail_lock,
               borderSide: 2,
               fontSize: 16,
               hintText: "Digite seu e-mail")),

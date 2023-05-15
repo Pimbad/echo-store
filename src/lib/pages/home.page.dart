@@ -1,5 +1,6 @@
 import 'package:echo_store/entities/product.dart';
 import 'package:echo_store/pages/login.page.dart';
+import 'package:echo_store/pages/product.page.dart';
 import 'package:echo_store/router/router.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
@@ -28,6 +29,9 @@ class _HomePageState extends State<HomePage> {
 
   void pushCartPage() =>
     EchoRouter.pushReplacement(const LoginPage(), context);
+
+  void pushProductDetailPage(int productId) =>
+    EchoRouter.push(ProductPage(productId: productId), context);
 
   void logout(){
     EchoRouter.pushReplacement(const LoginPage(), context);
@@ -85,14 +89,14 @@ class _HomePageState extends State<HomePage> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      height: Sizes.getPercentHeight(context, 56),
+                      height: Sizes.getPercentHeight(context, 50),
                       decoration: BoxDecoration(
                         color: ColorPallete.cardBackgroundColor,
                         borderRadius: BorderRadius.circular(20),
                         ),
                         child: Column(children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 20),
+                            padding: const EdgeInsets.only(top: 40),
                             child: SizedBox(
                               width: Sizes.getPercentWidth(context, 35),
                               height: Sizes.getPercentHeight(context, 20),
@@ -110,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(top: 25),
                             child: SizedBox(
                               width: Sizes.getPercentWidth(context, 70),
-                              height: Sizes.getPercentHeight(context, 30),
+                              height: Sizes.getPercentHeight(context, 23),
                               child: Column(children: [
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),
@@ -146,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                                     paddingRight: 0,
                                     backgroundColor: Colors.transparent,
                                     fontColor: ColorPallete.backgroundColorLight,
-                                    onPressed: () {},
+                                    onPressed: () => pushProductDetailPage(_products[index].id),
                                   ),
                                 ),
 

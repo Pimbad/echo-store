@@ -1,13 +1,14 @@
 import 'package:echo_store/entities/product.dart';
 import 'package:echo_store/pages/login.page.dart';
 import 'package:echo_store/router/router.dart';
-import 'package:echo_store/services/auth.service.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
 import 'package:echo_store/utils/toasts.dart';
 import 'package:echo_store/widgets/echo.button.widget.dart';
+import 'package:echo_store/widgets/echo.home.header.widget.dart';
 import 'package:echo_store/widgets/echo.input.widget.dart';
+import 'package:echo_store/widgets/echo.loading.widget.dart';
 import 'package:echo_store/widgets/echo.page.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   final searchController = TextEditingController();
 
   final ProductService _productService = ProductService();
-  final AuthService _authService = AuthService();
 
   List<Product> _products = List.empty();
 
@@ -60,38 +60,7 @@ class _HomePageState extends State<HomePage> {
           child: SizedBox(
             width: Sizes.getPercentWidth(context, 85),
             child: Column(children: [
-              Row(children: [
-                SizedBox(
-                  width: Sizes.getPercentWidth(context, 42.5),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.logout,
-                        color: ColorPallete.backgroundColorLight,
-                        size: 30),
-                      alignment: Alignment.centerLeft,
-                      onPressed: () => logout(),
-                    )
-                  ),
-                ),
-
-                SizedBox(
-                  width: Sizes.getPercentWidth(context, 42.5),
-                  child: 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.shopping_cart,
-                        color: ColorPallete.backgroundColorLight,
-                        size: 30),
-                      alignment: Alignment.centerRight,
-                      onPressed: pushCartPage,
-                    )
-                  )
-                )
-              ],),
+              const EchoHomeHeader(),
 
               Padding(
                 padding: const EdgeInsets.only(top: 20),
@@ -106,13 +75,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: _products.isEmpty
-              ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  color: ColorPallete.backgroundColor,
-                )  
-              )  
+              ? const EchoLoading()  
               : SizedBox(
                 width: Sizes.getPercentWidth(context, 85),
                 height: Sizes.getPercentHeight(context, 65),

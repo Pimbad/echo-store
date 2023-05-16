@@ -1,3 +1,4 @@
+import 'package:echo_store/pages/cart.page.dart';
 import 'package:echo_store/pages/login.page.dart';
 import 'package:echo_store/router/router.dart';
 import 'package:echo_store/utils/color.pallete.dart';
@@ -7,9 +8,11 @@ import 'package:flutter/material.dart';
 class EchoHomeHeader extends StatelessWidget {
   final StatefulWidget? returnPage;
   final bool logout;
+  final bool cart;
 
   const EchoHomeHeader({
     this.returnPage,
+    this.cart = true,
     this.logout = true,
     super.key});
 
@@ -17,7 +20,7 @@ class EchoHomeHeader extends StatelessWidget {
     EchoRouter.pushReplacement(returnPage as StatefulWidget, context);
 
   void _pushCartPage(context) =>
-    EchoRouter.pushReplacement(const LoginPage(), context);
+    EchoRouter.pushReplacement(const CartPage(), context);
 
   void _logout(context){
     EchoRouter.pushReplacement(const LoginPage(), context);
@@ -46,7 +49,8 @@ class EchoHomeHeader extends StatelessWidget {
             ),
           ),
 
-          SizedBox(
+          cart 
+          ? SizedBox(
               width: Sizes.getPercentWidth(context, 42.5),
               child: Padding(
                   padding: const EdgeInsets.only(top: 20),
@@ -58,6 +62,7 @@ class EchoHomeHeader extends StatelessWidget {
                   )
             )
           )
+          : const Text("")
         ],
       ),
     );

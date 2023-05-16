@@ -66,7 +66,7 @@ class _ProductPageState extends State<ProductPage>{
                   child: _product == null 
                   ? const EchoLoading()
                   : SizedBox(
-                    height: Sizes.getPercentHeight(context, 80),
+                    height: Sizes.getPercentHeight(context, 75),
                     width: Sizes.getPercentWidth(context, 85),
                       child: SingleChildScrollView(
                         child: Column(
@@ -178,7 +178,7 @@ class _ProductPageState extends State<ProductPage>{
                               text: "Adicionar ao Carrinho",
                               paddingTop: 50,
                               paddingBottom: 100,
-                              width: Sizes.getPercentWidth(context, 35),
+                              width: Sizes.getPercentWidth(context, 43),
                               onPressed: addProductToCart,
                             ),
                           ],

@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                      height: Sizes.getPercentHeight(context, 50),
+                      height: Sizes.getPercentHeight(context, 57),
                       decoration: BoxDecoration(
                         color: ColorPallete.cardBackgroundColor,
                         borderRadius: BorderRadius.circular(20),
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(top: 25),
                             child: SizedBox(
                               width: Sizes.getPercentWidth(context, 70),
-                              height: Sizes.getPercentHeight(context, 23),
+                              height: Sizes.getPercentHeight(context, 28),
                               child: Column(children: [
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),

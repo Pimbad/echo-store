@@ -1,12 +1,17 @@
-import 'package:echo_store/entities/product.dart';
+import 'package:echo_store/entities/cart.product.dart';
+import 'package:echo_store/pages/finish.page.dart';
 import 'package:echo_store/pages/home.page.dart';
+import 'package:echo_store/router/router.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
+import 'package:echo_store/utils/toasts.dart';
 import 'package:echo_store/widgets/echo.button.widget.dart';
 import 'package:echo_store/widgets/echo.home.header.widget.dart';
+import 'package:echo_store/widgets/echo.loading.widget.dart';
 import 'package:echo_store/widgets/echo.page.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -16,17 +21,51 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage>{
-  List<Product> _cartProducts = List.empty();
+  List<CartProduct> _cartProducts = List.empty();
+  double _cartPrice = 0;
+  bool _loadingProducts = true;
 
   final ProductService _productService = ProductService();
+  final NumberFormat _numberFormat = NumberFormat.currency(locale: "pt_BR", symbol: "R\$");
 
-  void loadProducts() async {
-    var prds = await _productService.getProductsAsync();
+  void finishOrder() {
+    _productService.finishOrder();
+    EchoRouter.push(const FinishPage(), context);
+  }
 
-    print(prds);
+  void calculateProductsPrice() {
+    double cartPrice = 0;
+
+    for (var cartProduct in _cartProducts) { 
+      cartPrice += cartProduct.product.price * cartProduct.count;
+    }
 
     setState(() {
-      _cartProducts = prds;
+      _cartPrice = cartPrice;
+    });
+  }
+
+  void removeProductFromCart(int productId, String productTitle){
+    _productService.removeProductFromCart(productId);
+    Toasts.warningToast("O produto $productTitle foi removido do carrinho!");
+
+    EchoRouter.pushReplacement(const CartPage(), context);
+  }
+
+  void loadProducts() {
+    var cartProducts = _productService.getCartProducts();
+    
+    if(cartProducts.isNotEmpty)
+    {
+      setState(() {
+        _cartProducts = cartProducts;
+      });
+
+      calculateProductsPrice();
+    }
+
+    setState(() {
+      _loadingProducts = false;
     });
   }
 
@@ -51,10 +90,20 @@ class _CartPageState extends State<CartPage>{
                   returnPage: HomePage(),
                 ),
 
-                SizedBox(
+                _loadingProducts
+                ? const EchoLoading()
+                : SizedBox(
                   height: Sizes.getPercentHeight(context, 56),
                   width: Sizes.getPercentWidth(context, 85),
-                  child: ListView.builder(
+                  child: _cartProducts.isEmpty
+                  ? const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Text(
+                      "Seu carrinho está vazio!",
+                      textAlign: TextAlign.center),
+                    ) 
+                  
+                  : ListView.builder(
                     itemCount: _cartProducts.length,
                     itemBuilder: (BuildContext context, int index){
                       return Padding(
@@ -77,7 +126,7 @@ class _CartPageState extends State<CartPage>{
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(5),
                                       child: Image.network(
-                                        _cartProducts[index].imageUrl),
+                                        _cartProducts[index].product.image),
                                         )
                                       )
                                     ),
@@ -91,7 +140,7 @@ class _CartPageState extends State<CartPage>{
                                       child: Column(children: [
                                         Padding(
                                           padding: const EdgeInsets.only(top: 20),
-                                            child: Text(_cartProducts[index].title,
+                                            child: Text(_cartProducts[index].product.title,
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               color: ColorPallete.fontColor,
@@ -102,7 +151,7 @@ class _CartPageState extends State<CartPage>{
                                           Padding(
                                             padding: const EdgeInsets.only(top: 15),
                                             child: Text(
-                                              "R\$ ${_cartProducts[index].price}",
+                                              "R\$ ${_cartProducts[index].product.price}",
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
                                                 color: ColorPallete.backgroundColor,
@@ -113,7 +162,7 @@ class _CartPageState extends State<CartPage>{
 
                                             Padding(
                                               padding: const EdgeInsets.only(top: 15, bottom: 5),
-                                              child: Text("Quantidade: 1")
+                                              child: Text("Quantidade: ${_cartProducts[index].count}")
                                             ),
                                                 
                                             Padding(
@@ -125,7 +174,7 @@ class _CartPageState extends State<CartPage>{
                                                   paddingLeft: 0,
                                                   paddingRight: 0,
                                                   height: 40,
-                                                  onPressed: () {},
+                                                  onPressed: () => removeProductFromCart(_cartProducts[index].product.id, _cartProducts[index].product.title),
                                               ),
                                             )
                                           ]
@@ -140,11 +189,52 @@ class _CartPageState extends State<CartPage>{
                   )
                 ),
 
-                Container(
-                    height: Sizes.getPercentHeight(context, 10),
-                    width: Sizes.getPercentWidth(context, 85),
-                    decoration: BoxDecoration(color: Colors.blue),
-                  )
+                _loadingProducts || _cartProducts.isEmpty
+                ? const SizedBox.shrink()
+                : SizedBox(
+                  height: Sizes.getPercentHeight(context, 10),
+                  width: Sizes.getPercentWidth(context, 85),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: Sizes.getPercentHeight(context, 10),
+                        width: Sizes.getPercentWidth(context, 42.5),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 20),
+                          child: RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              style: const TextStyle(
+                                color: ColorPallete.fontColor,
+                                fontSize: 20,
+                              ),
+                              children: [
+                                const TextSpan(text: "Total: \n"),
+                                TextSpan(
+                                  text: _numberFormat.format(_cartPrice),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ))
+                              ]
+                            ) 
+                          ),
+                        )
+                      ),
+
+                      SizedBox(
+                        height: 65,
+                        width: Sizes.getPercentWidth(context, 42.5),
+                        child: EchoButton(
+                          text: "Finalizar Pedido",
+                          paddingTop: 15,
+                          width: 90,
+                          height: 10,
+                          onPressed: finishOrder,
+                        ),
+                      )
+                    ],
+                  ),    
+                )
               ])
             )
           )

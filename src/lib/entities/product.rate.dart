@@ -10,4 +10,9 @@ class ProductRate{
     ProductRate(
       json['rate'] as num,
       json['count'] as int);
+
+  Map<String, dynamic> toJson() => {
+        "rate": rate,
+        "count": count,
+    };
 }

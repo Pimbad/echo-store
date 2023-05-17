@@ -6,7 +6,7 @@ class Product{
   num price;
   String description;
   String category;
-  String imageUrl;
+  String image;
   ProductRate rating;
 
   Product(
@@ -15,7 +15,7 @@ class Product{
     this.price,
     this.description,
     this.category,
-    this.imageUrl,
+    this.image,
     this.rating);
 
     factory Product.fromJson(dynamic json) =>
@@ -27,5 +27,15 @@ class Product{
         json['category'] as String,
         json['image'] as String,
         ProductRate.fromJson(json['rating']));
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "price": price,
+        "description": description,
+        "category": category,
+        "image": image,
+        "rating": rating.toJson()
+    };
 
 }

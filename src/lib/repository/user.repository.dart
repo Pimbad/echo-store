@@ -1,14 +1,16 @@
 import 'package:localstorage/localstorage.dart';
 
 class UserRepository{
-  final LocalStorage storage = LocalStorage('user');
+  static const String STORAGE_LABEL = "user";
+  static const String TOKEN_TABLE = "token";
+  final LocalStorage storage = LocalStorage(STORAGE_LABEL);
 
   void saveUserToken(String token) =>
-    storage.setItem("token", token);
+    storage.setItem(TOKEN_TABLE, token);
 
   String? getUserToken() =>
-    storage.getItem("token");
+    storage.getItem(TOKEN_TABLE);
 
   void removeToken() =>
-    storage.setItem("token", "");
+    storage.setItem(TOKEN_TABLE, "");
 }

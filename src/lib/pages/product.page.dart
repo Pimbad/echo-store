@@ -28,7 +28,11 @@ class _ProductPageState extends State<ProductPage>{
 
   final ProductService _productService = ProductService();
 
-  void addProductToCart(){}
+  
+  void addProductToCart(int productId, String productTitle){
+    Toasts.messageToast("O produto $productTitle foi adicionado ao carrinho!");
+    _productService.addProductToCart(productId);
+  }
 
   void loadProductById(int productId) async {
     var product = await _productService.getProductById(productId);
@@ -42,6 +46,8 @@ class _ProductPageState extends State<ProductPage>{
       });
     }
   }
+
+
 
   @override
   void initState() {
@@ -84,7 +90,7 @@ class _ProductPageState extends State<ProductPage>{
                                   fit: BoxFit.contain,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(5),
-                                    child: Image.network(_product?.imageUrl as String),
+                                    child: Image.network(_product?.image as String),
                                   )
                                 ),
                               )
@@ -179,7 +185,7 @@ class _ProductPageState extends State<ProductPage>{
                               paddingTop: 50,
                               paddingBottom: 100,
                               width: Sizes.getPercentWidth(context, 43),
-                              onPressed: addProductToCart,
+                              onPressed: () => addProductToCart(_product?.id as int, _product?.title as String),
                             ),
                           ],
                         )

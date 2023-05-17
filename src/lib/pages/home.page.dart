@@ -50,6 +50,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void addProductToCart(int productId, String productTitle){
+    Toasts.messageToast("O produto $productTitle foi adicionado ao carrinho!");
+    _productService.addProductToCart(productId);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -104,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                                 fit: BoxFit.fill,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
-                                  child: Image.network(_products[index].imageUrl),
+                                  child: Image.network(_products[index].image),
                                 )
                               )
                             ),
@@ -163,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                     paddingLeft: 0,
                                     paddingRight: 0,
                                     height: 40,
-                                    onPressed: () {},
+                                    onPressed: () => addProductToCart(_products[index].id, _products[index].title),
                                   ),
                                 )
                               ]),

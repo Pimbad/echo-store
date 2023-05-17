@@ -62,7 +62,7 @@ class EchoHomeHeader extends StatelessWidget {
                   )
             )
           )
-          : const Text("")
+          : const SizedBox.shrink()
         ],
       ),
     );

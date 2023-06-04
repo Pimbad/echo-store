@@ -50,9 +50,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void addProductToCart(int productId, String productTitle){
+  Future<void> addProductToCart(int productId, String productTitle) async {
+    await _productService.addProductToCart(productId);
+
     Toasts.messageToast("O produto $productTitle foi adicionado ao carrinho!");
-    _productService.addProductToCart(productId);
   }
 
   @override

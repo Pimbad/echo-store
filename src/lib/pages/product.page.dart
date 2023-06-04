@@ -29,9 +29,9 @@ class _ProductPageState extends State<ProductPage>{
   final ProductService _productService = ProductService();
 
   
-  void addProductToCart(int productId, String productTitle){
+  Future<void> addProductToCart(int productId, String productTitle) async {
+    await _productService.addProductToCart(productId);
     Toasts.messageToast("O produto $productTitle foi adicionado ao carrinho!");
-    _productService.addProductToCart(productId);
   }
 
   void loadProductById(int productId) async {
@@ -46,8 +46,6 @@ class _ProductPageState extends State<ProductPage>{
       });
     }
   }
-
-
 
   @override
   void initState() {

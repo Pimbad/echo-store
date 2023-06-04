@@ -2,13 +2,10 @@ import 'dart:convert';
 
 import 'package:echo_store/entities/cart.product.dart';
 import 'package:echo_store/entities/product.dart';
-import 'package:echo_store/repository/product.repository.dart';
+import 'package:echo_store/enums/api.enum.dart';
 import 'package:echo_store/services/base.service.dart';
 
 class ProductService extends BaseService {
-
-  final ProductRepository _productRepository = ProductRepository();
-
   Future<List<Product>> getProductsAsync() async {
     var response = await getAsync("products");
 
@@ -34,73 +31,43 @@ class ProductService extends BaseService {
     return null;
   }
 
-  List<CartProduct> getCartProducts() {
-    return _productRepository.getCartProducts();
+  Future<List<CartProduct>?> getCartProducts() async {
+    var response = await getAsync("cart/get-cart-itens", api: Api.echostore);
+
+    if(response.statusCode == 200){
+      final body = json.decode(response.body);
+      
+      return List<CartProduct>.from(body.map((cartProduct)
+        => CartProduct.fromJson(cartProduct)));
+    }
+
+    return null;
   }
 
-  void removeProductFromCart(int productId){
-    var cartProducts = getCartProducts();
+  Future<bool> removeProductFromCart(int productId) async{
+    var response = await deleteAsync("cart/delete-cart-item/$productId", api: Api.echostore);
 
-    var newCart = cartProducts
-      .where((cp) => cp.product.id != productId)
-      .toList();
-
-    _productRepository.saveCartProducts(newCart);
+    return response.statusCode == 202;
   }
 
-  void addProductToCart(int productId) async {
+  Future<bool> addProductToCart(int productId) async {
     var product = await getProductById(productId);
 
-    var cartProducts = _productRepository.getCartProducts();
-
-    if(cartProducts.isEmpty)
-    {
-      _createNewCart(product as Product);
-      return;
-    }
-
-    var exists = cartProducts
-      .where((cp) => cp.product.id == product?.id)
-      .toList();
-
-    if(exists.isNotEmpty)
-    {
-      _increaseCartProductCount(product as Product, cartProducts);
-    }
-    else
-    {
-      _addNewProductToCart(product as Product, cartProducts);
-    }
-  }
-
-  void _addNewProductToCart(Product product, List<CartProduct> cartProducts){
-    var cartProduct = CartProduct(1, product);
-    cartProducts.add(cartProduct);
-
-    _productRepository.saveCartProducts(cartProducts);
-  }
-
-  void _increaseCartProductCount(Product product, List<CartProduct> cartProducts)
-  {
-    for(var cartProduct in cartProducts)
-    {
-      if(cartProduct.product.id == product.id)
-      {
-        cartProduct.count++;
-        break;
+    var body = jsonEncode(<String, Object>{
+      'id': product?.id as int,
+      'title': product?.title as String,
+      'price': product?.price as double,
+      'description': product?.description as String,
+      'category': product?.category as String,
+      'image': product?.image as String,
+      'rating': {
+        'rate': product?.rating.rate,
+        'count': product?.rating.count
       }
-    }
+    });
 
-    _productRepository.saveCartProducts(cartProducts);
+    var response = await postAsync("cart/add-to-cart", body, api: Api.echostore);
+
+    return response.statusCode == 201;
   }
-
-  void _createNewCart(Product product){
-    var newCart = <CartProduct>[
-      CartProduct(1, product)
-    ];
-
-    _productRepository.saveCartProducts(newCart);
-  }
-
-  void finishOrder() => _productRepository.cleanCart();
 }

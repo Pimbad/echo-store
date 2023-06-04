@@ -1,24 +1,24 @@
+import 'package:echo_store/entities/order.dart';
 import 'package:echo_store/pages/home.page.dart';
 import 'package:echo_store/router/router.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/widgets/echo.button.widget.dart';
 import 'package:echo_store/widgets/echo.page.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:random_string/random_string.dart';
 
 import '../utils/sizes.dart';
 import '../widgets/echo.home.header.widget.dart';
 
 class FinishPage extends StatefulWidget {
-  const FinishPage({super.key});
+  final Order _order;
+
+  const FinishPage(this._order, {super.key});
 
   @override
   State<FinishPage> createState() => _FinishPageState();
 }
 
 class _FinishPageState extends State<FinishPage>{
-  final String _orderHash = randomAlpha(12);
-
   @override
   void initState() {
     super.initState();
@@ -53,7 +53,7 @@ class _FinishPageState extends State<FinishPage>{
                       children: [
                         const TextSpan(text: "Seu pedido \n "),
                           TextSpan(
-                            text: "#${_orderHash.toUpperCase()} \n",
+                            text: "#${widget._order.id} \n",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: ColorPallete.backgroundColor,

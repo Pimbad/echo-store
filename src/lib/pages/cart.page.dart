@@ -1,7 +1,9 @@
 import 'package:echo_store/entities/cart.product.dart';
+import 'package:echo_store/entities/order.dart';
 import 'package:echo_store/pages/finish.page.dart';
 import 'package:echo_store/pages/home.page.dart';
 import 'package:echo_store/router/router.dart';
+import 'package:echo_store/services/order.service.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
@@ -26,11 +28,17 @@ class _CartPageState extends State<CartPage>{
   bool _loadingProducts = true;
 
   final ProductService _productService = ProductService();
+  final OrderService _orderService = OrderService();
   final NumberFormat _numberFormat = NumberFormat.currency(locale: "pt_BR", symbol: "R\$");
 
-  void finishOrder() {
-    _productService.finishOrder();
-    EchoRouter.push(const FinishPage(), context);
+  Future<void> finishOrder() async {
+    var order = await _orderService.finishOrder();
+    
+    pushFinishPage(order as Order);
+  }
+
+  void pushFinishPage(Order order){
+    EchoRouter.push(FinishPage(order), context);
   }
 
   void calculateProductsPrice() {
@@ -45,17 +53,20 @@ class _CartPageState extends State<CartPage>{
     });
   }
 
-  void removeProductFromCart(int productId, String productTitle){
-    _productService.removeProductFromCart(productId);
+  void pushCartPage() => EchoRouter.pushReplacement(const CartPage(), context);
+
+  Future<void> removeProductFromCart(int productId, String productTitle) async {
+    await _productService.removeProductFromCart(productId);
+
     Toasts.warningToast("O produto $productTitle foi removido do carrinho!");
 
-    EchoRouter.pushReplacement(const CartPage(), context);
+    pushCartPage();
   }
 
-  void loadProducts() {
-    var cartProducts = _productService.getCartProducts();
+  void loadProducts() async {
+    var cartProducts = await _productService.getCartProducts();
     
-    if(cartProducts.isNotEmpty)
+    if(cartProducts!.isNotEmpty)
     {
       setState(() {
         _cartProducts = cartProducts;

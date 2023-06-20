@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:echo_store/pages/home.page.dart';
 import 'package:echo_store/pages/login.page.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:flutter/material.dart';
@@ -26,29 +27,26 @@ class _IndexPageState extends State<IndexPage> {
 
   void pushLoginPage() {
     Timer(const Duration(seconds: 3),
-        () => EchoRouter.pushReplacement(const LoginPage(), context));
+        () => EchoRouter.pushReplacement(const HomePage(), context));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          alignment: Alignment.center,
-          width: Sizes.getFullWidth(context),
-          height: Sizes.getFullHeight(context),
-          color: ColorPallete.backgroundColor,
-          child: Center(
-            child: SizedBox(
-            width: Sizes.getPercentWidth(context, 70),
-            height: Sizes.getPercentHeight(context, 70),
-            child:
-            Image.asset(
-              'assets/images/logo.png',
-              scale: 1,
-            ),
-          ),
-        )
-      )
-    );
+        body: Container(
+            alignment: Alignment.center,
+            width: Sizes.getFullWidth(context),
+            height: Sizes.getFullHeight(context),
+            color: ColorPallete.backgroundColor,
+            child: Center(
+              child: SizedBox(
+                width: Sizes.getPercentWidth(context, 70),
+                height: Sizes.getPercentHeight(context, 70),
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  scale: 1,
+                ),
+              ),
+            )));
   }
 }

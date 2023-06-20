@@ -1,5 +1,6 @@
 import 'package:echo_store/entities/product.dart';
 import 'package:echo_store/pages/home.page.dart';
+import 'package:echo_store/pages/product.page.dart';
 import 'package:echo_store/services/product.service.dart';
 import 'package:echo_store/utils/color.pallete.dart';
 import 'package:echo_store/utils/sizes.dart';
@@ -10,7 +11,9 @@ import 'package:echo_store/widgets/echo.page.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../router/router.dart';
 import '../widgets/echo.loading.widget.dart';
+import 'category.page.dart';
 
 class ProductByCategoryPage extends StatefulWidget {
   final List<Product> _productList;
@@ -22,15 +25,16 @@ class ProductByCategoryPage extends StatefulWidget {
 }
 
 class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
-  final NumberFormat _numberFormat =
-      NumberFormat.currency(locale: "pt_BR", symbol: "R\$");
-
   final ProductService _productService = ProductService();
 
   Future<void> addProductToCart(int productId, String productTitle) async {
     await _productService.addProductToCart(productId);
+
     Toasts.messageToast("O produto $productTitle foi adicionado ao carrinho!");
   }
+
+  void pushProductDetailPage(int productId) =>
+      EchoRouter.push(ProductPage(productId: productId), context);
 
   @override
   void initState() {
@@ -42,149 +46,173 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
     return Scaffold(
         body: EchoPage(Center(
             child: SizedBox(
-                height: Sizes.getPercentHeight(context, 75),
                 width: Sizes.getPercentWidth(context, 85),
                 child: Column(children: [
-                  const EchoHomeHeader(
-                    logout: false,
-                    cart: false,
-                    returnPage: HomePage(),
-                  ),
                   SizedBox(
-                      height: Sizes.getPercentHeight(context, 56),
-                      width: Sizes.getPercentWidth(context, 85),
-                      child: ListView.builder(
-                          itemCount: widget._productList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                                padding: const EdgeInsets.only(top: 5),
-                                child: Container(
-                                    height: Sizes.getPercentHeight(context, 55),
-                                    decoration: BoxDecoration(
-                                      color: ColorPallete.cardBackgroundColor,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: SingleChildScrollView(
-                                        child: Column(
-                                      children: [
-                                        Container(
-                                            height: Sizes.getPercentHeight(
-                                                context, 40),
-                                            width: Sizes.getPercentWidth(
-                                                context, 85),
-                                            decoration: BoxDecoration(
-                                              color: ColorPallete
-                                                  .cardBackgroundColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(25),
-                                              child: FittedBox(
-                                                  fit: BoxFit.contain,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    child: Image.network(widget
-                                                        ._productList[index]
-                                                        .image),
-                                                  )),
-                                            )),
-                                        Padding(
+                      child: Column(children: [
+                    const EchoHomeHeader(
+                      logout: false,
+                      cart: false,
+                      returnPage: CategoryPage(),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: widget._productList.isEmpty
+                            ? const EchoLoading()
+                            : SizedBox(
+                                width: Sizes.getPercentWidth(context, 85),
+                                height: Sizes.getPercentHeight(context, 65),
+                                child: ListView.builder(
+                                    itemCount: widget._productList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: Text(
-                                            "${widget._productList[index].rating.rate}/5 \n (${widget._productList[index].rating.count} avaliações)",
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                                color: ColorPallete.rateColor),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 30),
-                                            child: Text(
-                                              widget._productList[index].title,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorPallete
-                                                      .darkFontColor),
-                                            )),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: Text(
-                                              widget
-                                                  ._productList[index].category,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      ColorPallete.fontColor),
-                                            )),
-                                        const Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 25, bottom: 25),
-                                          child: Divider(
-                                              height: 1,
-                                              thickness: .3,
-                                              color: ColorPallete.fontColor),
-                                        ),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 5),
-                                            child: Text(
-                                              widget._productList[index]
-                                                  .description,
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w300,
-                                                  color:
-                                                      ColorPallete.fontColor),
-                                            )),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 40),
-                                          child: SizedBox(
-                                            width: Sizes.getPercentWidth(
-                                                context, 45),
-                                            child: const Divider(
-                                                height: 1,
-                                                thickness: .3,
-                                                color: ColorPallete.fontColor),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 15),
-                                            child: Text(
-                                              _numberFormat.format(widget
-                                                  ._productList[index].price),
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(
-                                                  fontSize: 22,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorPallete
-                                                      .backgroundColorLight),
-                                            )),
-                                        EchoButton(
-                                          text: "Adicionar ao Carrinho",
-                                          paddingTop: 50,
-                                          paddingBottom: 100,
-                                          width: Sizes.getPercentWidth(
-                                              context, 43),
-                                          onPressed: () => addProductToCart(
-                                              widget._productList[index].id,
-                                              widget._productList[index].title),
-                                        ),
-                                      ],
-                                    ))));
-                          }))
+                                              const EdgeInsets.only(top: 15),
+                                          child: Container(
+                                              height: Sizes.getPercentHeight(
+                                                  context, 60),
+                                              width: Sizes.getPercentWidth(
+                                                  context, 60),
+                                              decoration: BoxDecoration(
+                                                color: ColorPallete
+                                                    .cardBackgroundColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 40),
+                                                    child: SizedBox(
+                                                        width: Sizes
+                                                            .getPercentWidth(
+                                                                context, 35),
+                                                        height: Sizes
+                                                            .getPercentHeight(
+                                                                context, 20),
+                                                        child: FittedBox(
+                                                            fit: BoxFit.fill,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              child: Image
+                                                                  .network(widget
+                                                                      ._productList[
+                                                                          index]
+                                                                      .image),
+                                                            ))),
+                                                  ),
+                                                  Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 25),
+                                                      child: SizedBox(
+                                                        width: Sizes
+                                                            .getPercentWidth(
+                                                                context, 70),
+                                                        height: Sizes
+                                                            .getPercentHeight(
+                                                                context, 28),
+                                                        child:
+                                                            Column(children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 20),
+                                                            child: Text(
+                                                                widget
+                                                                    ._productList[
+                                                                        index]
+                                                                    .title,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    color: ColorPallete
+                                                                        .fontColor,
+                                                                    fontSize:
+                                                                        14)),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 15),
+                                                            child: Text(
+                                                                "R\$ ${widget._productList[index].price}",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    color: ColorPallete
+                                                                        .backgroundColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        20)),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 30),
+                                                            child: EchoButton(
+                                                              text: "Ver",
+                                                              height: 40,
+                                                              paddingTop: 5,
+                                                              paddingBottom: 0,
+                                                              paddingLeft: 0,
+                                                              paddingRight: 0,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              fontColor:
+                                                                  ColorPallete
+                                                                      .backgroundColorLight,
+                                                              onPressed: () =>
+                                                                  pushProductDetailPage(widget
+                                                                      ._productList[
+                                                                          index]
+                                                                      .id),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 10),
+                                                            child: EchoButton(
+                                                              text:
+                                                                  "Adicionar ao carrinho",
+                                                              paddingTop: 5,
+                                                              paddingBottom: 0,
+                                                              paddingLeft: 0,
+                                                              paddingRight: 0,
+                                                              height: 45,
+                                                              onPressed: () => addProductToCart(
+                                                                  widget
+                                                                      ._productList[
+                                                                          index]
+                                                                      .id,
+                                                                  widget
+                                                                      ._productList[
+                                                                          index]
+                                                                      .title),
+                                                            ),
+                                                          )
+                                                        ]),
+                                                      )),
+                                                ],
+                                              )));
+                                    }))),
+                  ]))
                 ])))));
   }
 }

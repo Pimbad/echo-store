@@ -1,5 +1,6 @@
 import 'package:echo_store/pages/cart.page.dart';
 import 'package:echo_store/pages/category.page.dart';
+import 'package:echo_store/pages/historic.page.dart';
 import 'package:echo_store/pages/login.page.dart';
 import 'package:echo_store/router/router.dart';
 import 'package:echo_store/utils/color.pallete.dart';
@@ -19,6 +20,9 @@ class EchoHomeHeader extends StatelessWidget {
 
   void _pushCartPage(context) =>
       EchoRouter.pushReplacement(const CartPage(), context);
+
+  void _pushHistoricPage(context) =>
+      EchoRouter.pushReplacement(const HistoricPage(), context);
 
   void _pushCategoryPage(context) =>
       EchoRouter.pushReplacement(const CategoryPage(), context);
@@ -51,7 +55,7 @@ class EchoHomeHeader extends StatelessWidget {
                       icon: const Icon(Icons.history,
                           color: ColorPallete.backgroundColorLight, size: 30),
                       alignment: Alignment.centerRight,
-                      onPressed: () => _pushCartPage(context)),
+                      onPressed: () => _pushHistoricPage(context)),
                   IconButton(
                     icon: const Icon(Icons.shopping_cart,
                         color: ColorPallete.backgroundColorLight, size: 30),

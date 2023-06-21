@@ -11,6 +11,7 @@ import 'package:echo_store/widgets/echo.home.header.widget.dart';
 import 'package:echo_store/widgets/echo.loading.widget.dart';
 import 'package:echo_store/widgets/echo.page.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,6 +31,9 @@ class _HomePageState extends State<HomePage> {
 
   void pushProductDetailPage(int productId) =>
       EchoRouter.push(ProductPage(productId: productId), context);
+
+  Future<void> pushChatPage() async =>
+    await launchUrl(Uri.parse('https://icy-stone-0c1d8b310.4.azurestaticapps.net/'));
 
   void logout() {
     EchoRouter.pushReplacement(const LoginPage(), context);
@@ -299,6 +303,14 @@ class _HomePageState extends State<HomePage> {
               ))),
       percentHeightBody: 90,
       percentHeightOverlay: 10,
-    ));
+    ),
+    floatingActionButton: FloatingActionButton(
+      backgroundColor: ColorPallete.buttonColor,
+      onPressed: pushChatPage,
+      child: const Icon(
+        Icons.chat,
+        color: ColorPallete.cardBackgroundColor,
+      )
+    ));  
   }
 }

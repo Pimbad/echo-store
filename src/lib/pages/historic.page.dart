@@ -48,50 +48,61 @@ class _HistoricPageState extends State<HistoricPage> {
                 cart: false,
                 returnPage: HomePage(),
               ),
-              SingleChildScrollView(
-                  child: ListView.builder(
-                      shrinkWrap: false,
-                      itemCount: _orders.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final order = _orders[index];
-                        return Card(
-                            elevation: 2,
-                            child: ListTile(
-                                title: Text('Pedido: #${order.id}',
-                                    style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 119, 33, 26))),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //Text(${order.date.toString()}),
-                                    const Text(
-                                      '20/06/2023',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text('Carrinho'),
-                                    Column(
-                                      children: order.itens.map((cartProduct) {
-                                        return ListTile(
-                                          title:
-                                              Text(cartProduct.product.title),
-                                          leading: Image.network(
-                                              cartProduct.product.image),
-                                          subtitle: Text(
-                                              'Quantidade: ${cartProduct.count}'),
-                                        );
-                                      }).toList(),
-                                    ),
-                                    Text(
-                                        'Total da Compra: R\$ ${order.price.toStringAsFixed(2)}',
+              _orders.isEmpty
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 40),
+                      child: Text("Você ainda não realizou pedidos.",
+                          textAlign: TextAlign.center),
+                    )
+                  : SizedBox(
+                      height: Sizes.getPercentHeight(context, 55),
+                      width: Sizes.getPercentWidth(context, 80),
+                      child: ListView.builder(
+                          shrinkWrap: false,
+                          itemCount: _orders.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final order = _orders[index];
+                            return Card(
+                                elevation: 2,
+                                child: ListTile(
+                                    title: Text('Pedido: #${order.id}',
                                         style: const TextStyle(
-                                          color: Color.fromARGB(255, 34, 3, 1),
-                                          fontWeight: FontWeight.bold,
-                                        ))
-                                  ],
-                                )));
-                      })),
+                                            color: Color.fromARGB(
+                                                255, 119, 33, 26))),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          order.createdAt,
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        const Text('Carrinho'),
+                                        Column(
+                                          children:
+                                              order.itens.map((cartProduct) {
+                                            return ListTile(
+                                              title: Text(
+                                                  cartProduct.product.title),
+                                              leading: Image.network(
+                                                  cartProduct.product.image),
+                                              subtitle: Text(
+                                                  'Quantidade: ${cartProduct.count}'),
+                                            );
+                                          }).toList(),
+                                        ),
+                                        Text(
+                                            'Total da Compra: R\$ ${order.price.toStringAsFixed(2)}',
+                                            style: const TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 34, 3, 1),
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ],
+                                    )));
+                          })),
             ],
           ),
         ),

@@ -34,19 +34,20 @@ class ProductService extends BaseService {
   Future<List<CartProduct>?> getCartProducts() async {
     var response = await getAsync("cart/get-cart-itens", api: Api.echostore);
 
-    if (response.statusCode == 200) {
-      final body = json.decode(response.body);
 
-      return List<CartProduct>.from(
-          body.map((cartProduct) => CartProduct.fromJson(cartProduct)));
+    if(response.statusCode == 200){
+      final body = json.decode(response.body);
+      
+      return List<CartProduct>.from(body.map((cartProduct)
+        => CartProduct.fromJson(cartProduct)));
     }
 
     return null;
   }
 
-  Future<bool> removeProductFromCart(int productId) async {
-    var response = await deleteAsync("cart/delete-cart-item/$productId",
-        api: Api.echostore);
+
+  Future<bool> removeProductFromCart(int productId) async{
+    var response = await deleteAsync("cart/delete-cart-item/$productId", api: Api.echostore);
 
     return response.statusCode == 202;
   }
@@ -64,8 +65,7 @@ class ProductService extends BaseService {
       'rating': {'rate': product?.rating.rate, 'count': product?.rating.count}
     });
 
-    var response =
-        await postAsync("cart/add-to-cart", body, api: Api.echostore);
+    var response = await postAsync("cart/add-to-cart", body, api: Api.echostore);
 
     return response.statusCode == 201;
   }

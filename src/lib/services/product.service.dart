@@ -9,11 +9,11 @@ class ProductService extends BaseService {
   Future<List<Product>> getProductsAsync() async {
     var response = await getAsync("products");
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final body = json.decode(response.body);
 
-      return List<Product>.from(body.map((product)
-        => Product.fromJson(product)));
+      return List<Product>.from(
+          body.map((product) => Product.fromJson(product)));
     }
 
     return List.empty();
@@ -22,7 +22,7 @@ class ProductService extends BaseService {
   Future<Product?> getProductById(int productId) async {
     var response = await getAsync("products/$productId");
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final body = json.decode(response.body);
 
       return Product.fromJson(body);
@@ -34,6 +34,7 @@ class ProductService extends BaseService {
   Future<List<CartProduct>?> getCartProducts() async {
     var response = await getAsync("cart/get-cart-itens", api: Api.echostore);
 
+
     if(response.statusCode == 200){
       final body = json.decode(response.body);
       
@@ -43,6 +44,7 @@ class ProductService extends BaseService {
 
     return null;
   }
+
 
   Future<bool> removeProductFromCart(int productId) async{
     var response = await deleteAsync("cart/delete-cart-item/$productId", api: Api.echostore);
@@ -56,14 +58,11 @@ class ProductService extends BaseService {
     var body = jsonEncode(<String, Object>{
       'id': product?.id as int,
       'title': product?.title as String,
-      'price': product?.price as double,
+      'price': product?.price as num,
       'description': product?.description as String,
       'category': product?.category as String,
       'image': product?.image as String,
-      'rating': {
-        'rate': product?.rating.rate,
-        'count': product?.rating.count
-      }
+      'rating': {'rate': product?.rating.rate, 'count': product?.rating.count}
     });
 
     var response = await postAsync("cart/add-to-cart", body, api: Api.echostore);

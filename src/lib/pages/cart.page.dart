@@ -102,11 +102,11 @@ class _CartPageState extends State<CartPage> {
                   _loadingProducts
                       ? const EchoLoading()
                       : SizedBox(
-                          height: Sizes.getPercentHeight(context, 56),
+                          height: Sizes.getPercentHeight(context, 58),
                           width: Sizes.getPercentWidth(context, 85),
                           child: _cartProducts.isEmpty
                               ? const Padding(
-                                  padding: EdgeInsets.only(top: 40),
+                                  padding: EdgeInsets.only(top: 20),
                                   child: Text("Seu carrinho está vazio!",
                                       textAlign: TextAlign.center),
                                 )

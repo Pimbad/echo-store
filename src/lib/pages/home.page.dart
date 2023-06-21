@@ -8,7 +8,6 @@ import 'package:echo_store/utils/sizes.dart';
 import 'package:echo_store/utils/toasts.dart';
 import 'package:echo_store/widgets/echo.button.widget.dart';
 import 'package:echo_store/widgets/echo.home.header.widget.dart';
-import 'package:echo_store/widgets/echo.input.widget.dart';
 import 'package:echo_store/widgets/echo.loading.widget.dart';
 import 'package:echo_store/widgets/echo.page.widget.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const EchoHomeHeader(),
                   Padding(
-                      padding: const EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 10),
                       child: TextField(
                         controller: searchController,
                         onChanged: (value) {
@@ -101,32 +100,51 @@ class _HomePageState extends State<HomePage> {
                           prefixIcon: Icon(Icons.search),
                         ),
                       )),
-                  SizedBox(
-                    width: Sizes.getPercentWidth(context, 100),
-                    height: Sizes.getPercentHeight(context, 10),
-                    child: Expanded(
-                        child: ListView.separated(
-                            itemCount: _filteredProducts.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const Divider(
-                                height: 1,
-                                color: Colors.grey,
-                              );
-                            },
-                            itemBuilder: (BuildContext context, int index) {
-                              final product = _filteredProducts[index];
-                              return ListTile(
-                                leading: Image.network(product.image),
-                                title: Text(product.title),
-                                subtitle: Text(product.description),
-                                onTap: () {
-                                  pushProductDetailPage(product.id);
-                                },
-                              );
-                            })),
+                  searchController.text == '' 
+                  ? const SizedBox.shrink()
+                  : Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: SizedBox(
+                      height: Sizes.getPercentHeight(context, 70),
+                      child: Expanded(
+                          child: ListView.builder(
+                              itemCount: _filteredProducts.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final product = _filteredProducts[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 5, bottom: 5), 
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: Sizes.getPercentHeight(context, 7),
+                                      decoration: BoxDecoration(
+                                        color: ColorPallete.cardBackgroundColor,
+                                        borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      child: ListTile(
+                                        leading: SizedBox(
+                                          width: Sizes.getPercentWidth(context, 10),
+                                          height: Sizes.getPercentHeight(context, 8),
+                                          child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                            BorderRadius.circular(5),
+                                            child: Image.network(
+                                            product.image)))
+                                        ),
+                                        title: Text(product.title),
+                                        onTap: () {
+                                          pushProductDetailPage(product.id);
+                                        },
+                                      )
+                                    )
+                                );
+                              })),
+                    )
                   ),
-                  Padding(
+                  searchController.text != '' 
+                  ? const SizedBox.shrink()
+                  : Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: _products.isEmpty
                           ? const EchoLoading()
@@ -138,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return Padding(
-                                        padding: const EdgeInsets.only(top: 15),
+                                        padding: const EdgeInsets.only(top: 5),
                                         child: Container(
                                             height: Sizes.getPercentHeight(
                                                 context, 57),
@@ -190,17 +208,21 @@ class _HomePageState extends State<HomePage> {
                                                               const EdgeInsets
                                                                       .only(
                                                                   top: 20),
-                                                          child: Text(
-                                                              _products[index]
-                                                                  .title,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                                          child: _products[index].title.length < 60 
+                                                          ?  Text(
+                                                              _products[index].title,
+                                                              textAlign: TextAlign.center,
                                                               style: const TextStyle(
-                                                                  color: ColorPallete
-                                                                      .fontColor,
-                                                                  fontSize:
-                                                                      14)),
+                                                                color: ColorPallete.fontColor,
+                                                                fontSize:14)
+                                                              )
+                                                          : Text(
+                                                              '${_products[index].title.substring(0, 61)}...',
+                                                              textAlign: TextAlign.center,
+                                                              style: const TextStyle(
+                                                                color: ColorPallete.fontColor,
+                                                                fontSize:14)
+                                                              )
                                                         ),
                                                         Padding(
                                                           padding:

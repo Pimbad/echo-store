@@ -4,7 +4,6 @@ import 'package:echo_store/pages/historic.page.dart';
 import 'package:echo_store/pages/login.page.dart';
 import 'package:echo_store/router/router.dart';
 import 'package:echo_store/utils/color.pallete.dart';
-import 'package:echo_store/utils/sizes.dart';
 import 'package:flutter/material.dart';
 
 class EchoHomeHeader extends StatelessWidget {
@@ -35,7 +34,7 @@ class EchoHomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         child: Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            padding: const EdgeInsets.only(top: 5, bottom: 5),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
